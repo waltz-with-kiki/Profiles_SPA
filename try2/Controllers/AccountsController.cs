@@ -23,6 +23,8 @@ namespace try2.Controllers
 
 
         [HttpGet("profiles")]
+
+        //[ResponseCache(Duration = 60)]
         public ICollection<Profile> GetProfiles()
         {
             return _RepProfiles.Items.ToList();
@@ -44,7 +46,24 @@ namespace try2.Controllers
                 return Ok();
             }
 
-            return NoContent();
+        }
+        public record RemoveProfileRequest
+        {
+           public string nickName { get; set; }
+        }
+
+        [HttpPost("profiles/remove")]
+        public IActionResult RemoveProfile([FromBody] RemoveProfileRequest request)
+        {
+            Profile RemoveProfile = _RepProfiles.Items.Where(x => x.NickName == request.nickName).FirstOrDefault();
+
+            if( RemoveProfile != null)
+            {
+                _RepProfiles.Remove(RemoveProfile.Id);
+                return Ok();
+            }
+            
+            return NotFound();
         }
 
         [HttpGet("user")]

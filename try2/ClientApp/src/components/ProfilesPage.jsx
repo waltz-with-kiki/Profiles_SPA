@@ -9,6 +9,29 @@ const ProfilesPage = () => {
         setProfiles([...Profiles, profile]);
     }*/
 
+    const removeProfile = async (profilenickName) => {
+
+        console.log(profilenickName);
+        
+        const response = await fetch('https://localhost:7150/api/accounts/profiles/remove', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({nickName: profilenickName
+                }),
+            });
+        
+        
+        //const UpdateProfiles = Profiles.filter((element) => element.nickName !== profilenickName);
+
+
+        //setProfiles(UpdateProfiles);
+
+        //console.log(Profiles);
+        fetchProfiles();
+    }
+
     const createProfile = async (profile) => {
         try {
 
@@ -42,7 +65,7 @@ const ProfilesPage = () => {
         // Вызов метода GET при монтировании компонента
         fetchProfiles();
       }, []);
-    
+
       const fetchProfiles = async () => {
           try {
               fetch('https://localhost:7150/api/accounts/profiles')
@@ -61,7 +84,7 @@ const ProfilesPage = () => {
     return (
         <div>
             <ProfileForm create={createProfile}></ProfileForm>
-            <ProfilesList profiles={Profiles}></ProfilesList>
+            <ProfilesList remove={removeProfile} profiles={Profiles}></ProfilesList>
 
           
         </div>

@@ -2,12 +2,12 @@ import {useState} from "react";
 import ProfileItem from "./ProfileItem";
 import "./ProfilePage.css";
 
-const ProfilesList = (props) => {
+const ProfilesList = ({remove, ...props}) => {
 
     return(
         <div className="profiles-list">
             {props.profiles.map((profile) =>
-            <ProfileItem profile={profile} key={profile.id}></ProfileItem>) }
+            <ProfileItem remove={remove} profile={profile} key={profile.id}></ProfileItem>) }
         </div>
     );
 }

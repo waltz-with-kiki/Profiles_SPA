@@ -14,9 +14,31 @@
   /* Для более точного контроля размеров элементов, вы можете использовать media queries */
   .profiles-list .profile-item {
     flex: 1 0 calc(33.333% - 20px); /* Три элемента в строке с отступами */
+    display: flex;
+    flex-direction: column;
   }
   
+  .profile-item .form {
+    position: relative;
+  }
 
+  .profile-item .form .delete-button {
+    align-self: flex-start;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: url('UI/deleteButton.png');
+    object-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: block;
+    margin: auto;
+    border-radius: 100%; /* Скругление углов */
+    cursor: pointer;
+    font-size: 12px; /* Размер шрифта */
+    transition: background-color 0.3s ease; /* Плавное изменение цвета при наведении */
+  }
   
   @media (max-width: 767px) {
     .profiles-list .profile-item {
