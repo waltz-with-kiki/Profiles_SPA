@@ -2,6 +2,7 @@
 using try2.DAL.Interfaces;
 using try2.Domain.Entities;
 using try2.Domain.Models.Entities;
+using try2.Domain.Models.Entities.Base;
 
 namespace try2.Controllers
 {
@@ -20,13 +21,39 @@ namespace try2.Controllers
             _RepProfiles = Profiles;
         }
 
-        [HttpGet]
-        public ICollection<User> Get()
+
+        [HttpGet("profiles")]
+        public ICollection<Profile> GetProfiles()
+        {
+            return _RepProfiles.Items.ToList();
+        }
+
+        [HttpPost("profiles")]
+        public IActionResult Add([FromBody] FakeProfile profile)
+        {
+            Profile NewProfile = new Profile{
+                NickName = profile.NickName,
+                Avatar = Convert.FromBase64String(profile.Avatar),
+                TimeCreate = profile.TimeCreate
+            };
+          //  if (profile.NickName.Trim() != "" && profile.Avatar != null)
+            {       
+                // Добавление пользователя в репозиторий
+                _RepProfiles.Add(NewProfile);
+                // Возвращаем успешный статус
+                return Ok();
+            }
+
+            return NoContent();
+        }
+
+        [HttpGet("user")]
+        public ICollection<User> GetUsers()
         {
             return _RepUsers.Items.ToList();
         }
 
-        [HttpPost]
+        [HttpPost("user")]
         public IActionResult Add([FromBody] User user)
         {
 

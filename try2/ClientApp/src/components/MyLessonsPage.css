@@ -1,0 +1,54 @@
+﻿.menu-list .menu-item > .link {
+    position: relative;
+    width: auto;
+    height: auto;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--color-menu-text);
+    font-weight: inherit;
+    letter-spacing: .15em;
+    text-align: left;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.menu-list {
+    list-style: none; /* Удаляет маркеры списка */
+    display: flex; /* Располагает элементы в строку */
+    padding: 0; /* Убирает внутренний отступ у списка */
+}
+
+.menu {
+    display: flex;
+    justify-content: center; /* Центрирование по горизонтали */
+    height: 100vh; /* Высота равная высоте видимой области (viewport) */
+}
+
+.menu-item:last-child {
+    margin-right: 0; /* Убирает отступ у последнего элемента списка */
+}
+
+.menu-list > .menu-item {
+    position: relative;
+    line-height: 1;
+    text-align: center
+}
+
+
+.menu-list .menu-item:not(.-category:not(.-parent)):hover > .link::after, .menu-list .menu-item.-active > .link::after {
+    visibility: visible;
+    transform: scaleX(1) translate(0, 0)
+}
+
+.menu-list > .menu-item {
+    margin: 0 20px;
+    padding: 8px 0
+}
+h1{
+    text-align: center
+}
+

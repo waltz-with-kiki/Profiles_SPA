@@ -1,0 +1,9 @@
+.avatar {
+    width: 165px;
+  height: 165px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid slateblue;
+  border-radius: 5%;
+  object-fit: cover; 
+}

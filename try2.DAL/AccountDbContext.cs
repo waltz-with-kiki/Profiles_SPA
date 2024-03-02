@@ -8,6 +8,7 @@ using try2.DAL.Configurations;
 using try2.Domain.Entities;
 using try2.Domain.Models.Entities;
 
+
 namespace try2.DAL
 {
     public class AccountDbContext :DbContext
@@ -16,6 +17,7 @@ namespace try2.DAL
         public DbSet<Profile> Profiles { get; set; }
 
         public DbSet<User> Users { get; set; }
+
 
         public AccountDbContext(DbContextOptions<AccountDbContext> options) : base(options)
         {

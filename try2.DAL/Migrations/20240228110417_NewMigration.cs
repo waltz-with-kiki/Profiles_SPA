@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -15,12 +16,12 @@ namespace try2.DAL.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Login = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    UserType = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Login = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
+                    Password = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
+                    Email = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    UserType = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,12 +32,12 @@ namespace try2.DAL.Migrations
                 name: "Profiles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NickName = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TimeChange = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    NickName = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
+                    Avatar = table.Column<byte[]>(type: "bytea", nullable: false),
+                    TimeCreate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -45,8 +46,7 @@ namespace try2.DAL.Migrations
                         name: "FK_Profiles_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

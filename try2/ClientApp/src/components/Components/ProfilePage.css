@@ -1,0 +1,31 @@
+.form{
+    margin-bottom: 10px;
+    height: 300px;
+    width: 300px;
+}
+
+  .profiles-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Отступ между элементами */
+    margin-top: 10px !important;
+  }
+  
+  /* Для более точного контроля размеров элементов, вы можете использовать media queries */
+  .profiles-list .profile-item {
+    flex: 1 0 calc(33.333% - 20px); /* Три элемента в строке с отступами */
+  }
+  
+
+  
+  @media (max-width: 767px) {
+    .profiles-list .profile-item {
+      flex: 1 0 calc(50% - 20px); /* По два элемента в строке на мобильных устройствах */
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .profiles-list {
+      justify-content: space-between;
+    }
+  }

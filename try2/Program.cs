@@ -11,12 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<AccountDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MSSQL")));
-
-
 /*builder.Services.AddDbContext<AccountDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("AccountDbContext")));*/
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MSSQL")));*/
+
+
+builder.Services.AddDbContext<AccountDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("POSTGRESQL")));
 
 builder.Services.AddTransient<IRepository<Profile>, DbRepository<Profile>>();
 

@@ -99,7 +99,7 @@ namespace try2.DAL.Repositories
     public class ProfileRepository : DbRepository<Profile>
     {
 
-        public override IQueryable<Profile> Items => base.Items.Include(item => item.ThisUser);
+        public override IQueryable<Profile> Items => base.Items.Include(item => item);
 
         public ProfileRepository(AccountDbContext db) : base(db)
         {
