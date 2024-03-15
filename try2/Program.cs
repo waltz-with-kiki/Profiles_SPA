@@ -4,6 +4,8 @@ using try2.DAL.Interfaces;
 using try2.DAL.Repositories;
 using try2.Domain.Entities;
 using try2.Domain.Models.Entities;
+using try2.Services;
+using try2.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AccountDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("POSTGRESQL")));
+
+builder.Services.AddTransient<IHashService, HashService>();
+
 
 builder.Services.AddTransient<IRepository<Profile>, DbRepository<Profile>>();
 
