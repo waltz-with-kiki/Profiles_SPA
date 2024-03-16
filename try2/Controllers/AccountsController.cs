@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using try2.DAL.Interfaces;
 using try2.Domain.Entities;
 using try2.Domain.Models.Entities;
 using try2.Domain.Models.Entities.Base;
+using try2.Services.Interfaces;
 
 namespace try2.Controllers
 {
@@ -15,10 +17,13 @@ namespace try2.Controllers
 
         private readonly IRepository<Profile> _RepProfiles;
 
-        public AccountsController(IRepository<User> Users, IRepository<Profile> Profiles)
+        private readonly IUserService _UserService;
+
+        public AccountsController(IRepository<User> Users, IRepository<Profile> Profiles, IUserService UserService)
         {
             _RepUsers = Users;
             _RepProfiles = Profiles;
+            _UserService = UserService;
         }
 
 
@@ -66,27 +71,32 @@ namespace try2.Controllers
             return NotFound();
         }
 
-        [HttpGet("user")]
+        [HttpGet("users")]
         public ICollection<User> GetUsers()
         {
             return _RepUsers.Items.ToList();
         }
 
-        [HttpPost("user")]
-        public IActionResult Add([FromBody] User user)
+        public record RegDetails
         {
+            public string Login { get; set; }
 
-            if (user.Login.Trim() != "" && user.Email.Trim() != "" && user.Password.Trim() != "")
-            {
-                user.UserType = Domain.Models.Enums.TypeUser.CasualUser;
-                // Добавление пользователя в репозиторий
-                _RepUsers.Add(user);
-                // Возвращаем успешный статус
+            public string Email { get; set; }
+
+            public string Password { get; set; }
+        }
+
+        [HttpPost("user/registration")]
+        public IActionResult Registration([FromBody] RegDetails user)
+        {
+            if(_UserService.Registration(user.Login, user.Password, user.Email))
+            { 
                 return Ok();
             }
-
             return NoContent();
         }
+
+
 
     }
 }

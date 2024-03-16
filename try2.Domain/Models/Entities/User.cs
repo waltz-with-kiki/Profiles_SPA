@@ -19,7 +19,9 @@ namespace try2.Domain.Entities
 
         public TypeUser UserType { get; set; }
 
-        public ICollection<Profile>? Profiles { get; set; }
+        public string Sugar { get; set; }
+
+        //public ICollection<Profile>? Profiles { get; set; }
 
     }
 }

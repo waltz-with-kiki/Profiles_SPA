@@ -42,8 +42,11 @@ namespace try2.DAL.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("character varying(16)");
+                        .HasColumnType("text");
+
+                    b.Property<string>("Sugar")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("UserType")
                         .HasColumnType("integer");
@@ -73,26 +76,9 @@ namespace try2.DAL.Migrations
                     b.Property<DateTime>("TimeCreate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Profiles");
-                });
-
-            modelBuilder.Entity("try2.Domain.Models.Entities.Profile", b =>
-                {
-                    b.HasOne("try2.Domain.Entities.User", null)
-                        .WithMany("Profiles")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("try2.Domain.Entities.User", b =>
-                {
-                    b.Navigation("Profiles");
                 });
 #pragma warning restore 612, 618
         }

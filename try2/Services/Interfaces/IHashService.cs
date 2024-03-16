@@ -7,7 +7,7 @@
 
         public string CreateHashedPassword(string password, string salt);
 
-        public bool VerifyPassword(string password, string passwordHash);
+        public bool VerifyPassword(string password, string salt, string passwordHash);
 
     }
 }

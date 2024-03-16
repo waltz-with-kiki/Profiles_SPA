@@ -16,8 +16,6 @@ namespace try2.DAL.Configurations
             base.Configure(builder);
 
             builder.Property(e => e.Login).IsRequired().HasMaxLength(16);
-            
-            builder.Property(e => e.Password).HasMaxLength(16);
 
             builder.Property(e => e.Email).IsRequired().HasMaxLength(20);
         }

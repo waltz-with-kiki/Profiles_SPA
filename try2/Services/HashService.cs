@@ -30,16 +30,18 @@ namespace try2.Services
                 return null;
             }
 
-            string passwordWithConstant = password + GetConstant();
+            string passwordWithSalt = password + salt;
 
-            return BCrypt.Net.BCrypt.HashPassword(passwordWithConstant, salt);
+            string passwordWithConstant = passwordWithSalt + GetConstant();
+
+            return BCrypt.Net.BCrypt.HashPassword(passwordWithConstant);
         }
 
-        public bool VerifyPassword(string password, string passwordHash)
+        public bool VerifyPassword(string password, string salt, string passwordHash)
         {
-            string passWithConstant = password + GetConstant();
+            string passWithAll = password + salt + GetConstant();
 
-            return BCrypt.Net.BCrypt.Verify(passWithConstant, passwordHash);
+            return BCrypt.Net.BCrypt.Verify(passWithAll, passwordHash);
         }
     }
 }

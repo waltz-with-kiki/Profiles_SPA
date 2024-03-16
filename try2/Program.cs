@@ -21,11 +21,12 @@ builder.Services.AddDbContext<AccountDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("POSTGRESQL")));
 
 builder.Services.AddTransient<IHashService, HashService>();
+builder.Services.AddTransient<IJwtService, JwtService>();
+builder.Services.AddTransient<IUserService, UserService>();
 
+builder.Services.AddTransient<IRepository<Profile>, ProfileRepository>();
 
-builder.Services.AddTransient<IRepository<Profile>, DbRepository<Profile>>();
-
-builder.Services.AddTransient<IRepository<User>, DbRepository<User>>();
+builder.Services.AddTransient<IRepository<User>, UserRepository>();
 
 
 var app = builder.Build();
