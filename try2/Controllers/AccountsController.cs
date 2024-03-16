@@ -77,13 +77,17 @@ namespace try2.Controllers
             return _RepUsers.Items.ToList();
         }
 
-        public record RegDetails
+        public record LogDetails
         {
             public string Login { get; set; }
 
+            public string Password { get; set; }
+        }
+
+        public record RegDetails : LogDetails
+        {
             public string Email { get; set; }
 
-            public string Password { get; set; }
         }
 
         [HttpPost("user/registration")]
@@ -94,6 +98,23 @@ namespace try2.Controllers
                 return Ok();
             }
             return NoContent();
+        }
+
+
+
+        [HttpPost("user/login")]
+        public IActionResult Login([FromBody] LogDetails user)
+        {
+            var result = _UserService.Login(user.Login, user.Password);
+            if (result.Success)
+            {
+                var AuthUser = _RepUsers.Items.Where(x => x.Login == user.Login).FirstOrDefault();
+
+                var token = _UserService.JwtToken(AuthUser);
+
+                return Ok(new { token });
+            }
+            return BadRequest(result.ErrorMessage);
         }
 
 

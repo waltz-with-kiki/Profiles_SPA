@@ -7,20 +7,52 @@ namespace try2.Services
     public class UserService : IUserService
     {
 
-        public UserService(IRepository<User> users, IHashService hashService)
+        public UserService(IRepository<User> users, IHashService hashService, IJwtService JwtService)
         {
             _RepUsers = users;
             _HashService = hashService;
+            _JwtService = JwtService;
         }
 
         private readonly IRepository<User> _RepUsers;
         private readonly IHashService _HashService;
+        private readonly IJwtService _JwtService;
 
 
-        public User Login(string Login, string password)
+        public record LoginResult
         {
+            public bool Success { get; set; }
+            public string ErrorMessage { get; set; }
+        }
 
-            return null;
+        public LoginResult Login(string Login, string password)
+        {
+            if (Login.Length < 4 || password.Length < 4)
+            {
+                return new LoginResult { Success = false, ErrorMessage = "Логин и пароль должны содержать не менее 4 символов." };
+            }
+
+            User Currentuser = _RepUsers.Items.Where(x => x.Login == Login).FirstOrDefault();
+
+            if (Currentuser == null)
+            {
+                return new LoginResult { Success = false, ErrorMessage = "Пользователь с таким логином не найден." };
+            }
+
+            var logSuccess = _HashService.VerifyPassword(password, Currentuser.Sugar, Currentuser.Password);
+
+            if (!logSuccess)
+            {
+                return new LoginResult { Success = false, ErrorMessage = "Неправильный пароль." };
+            }
+
+            return new LoginResult { Success = true };
+        }
+
+        public string JwtToken(User user)
+        {
+            var token = _JwtService.GenerateToken(user);
+            return token;
         }
 
         public bool Registration(string Login, string password, string Email)
